@@ -23,7 +23,6 @@ def parse_event(f):
 
 
 def get_args():
-
     parser = argparse.ArgumentParser(description='Calculate calendar allocation.')
     parser.add_argument(dest='file', help='an integer for the accumulator')
     parser.add_argument('-c', dest='measured_category', default='blocker', help='What CATEGORIES field to calculate')

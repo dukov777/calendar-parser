@@ -2,6 +2,8 @@
 #SO reference: http://stackoverflow.com/questions/21477599/read-outlook-events-via-python
 # https://msdn.microsoft.com/en-us/library/office/ff869026(v=office.15).aspx
 
+# https://docs.microsoft.com/en-us/previous-versions/office/developer/office-2010/ff869026(v=office.14)
+# https://github.com/bexway/outloook-calendar-reader
 
 import win32com.client, datetime
 from dateutil.parser import *
