@@ -17,8 +17,8 @@ def get_args():
     parser = argparse.ArgumentParser(description='Calculate calendar allocation.')
     parser.add_argument('-c', dest='measured_category', default='blocker', help='What CATEGORIES field to calculate')
     parser.add_argument('--exclude', dest='exclude', default='', help='What CATEGORIES field to calculate')
-    parser.add_argument('-s', dest='startDate', help='Start date mm/dd/yyyy')
-    parser.add_argument('-e', dest='endDate', help='End date mm/dd/yyyy')
+    parser.add_argument('-s', dest='startDate', help='Start date dd/mm/yyyy')
+    parser.add_argument('-e', dest='endDate', help='End date dd/mm/yyyy')
     return parser.parse_args()
 
 
@@ -36,39 +36,31 @@ def main():
     appointments.IncludeRecurrences = "True"
 
     # get user input range of dates to process
-    parsedInput = parse(args.startDate).date()
-    begin = parsedInput.strftime("%m/%d/%Y")
-    parsedInput = parse(args.endDate).date()
-    end = parsedInput.strftime("%m/%d/%Y")
+    # parsedInput = parse(args.startDate).date()
+    # begin = parsedInput.strftime("%m/%d/%Y")
+    # parsedInput = parse(args.endDate).date()
+    # end = parsedInput.strftime("%m/%d/%Y")
+    begin = args.startDate
+    end = args.endDate
 
     # restrict appointments to specified range
     appointments = appointments.Restrict("[Start] >= '" +begin+ "' AND [END] <= '" +end+ "'")
-
-    #Generate a dictionary; I need to track appointment dates to count them
-    appointmentDictionary = {}
-    #Create a regex for time and Subject
-    timeregex = re.compile('\d\d/\d\d/\d\d')
-    nameregex = re.compile(u'[Nn]ame: ?(?P<name>[\( \)\&;\w]*)', re.UNICODE)
-    locationregex = re.compile(u'[Ll]ocation: ?(?P<location>[\( \)\&;\d]*)', re.UNICODE)
-    #Note to self: get names from invitees?
+    # appointments = appointments.Restrict("[Start] >= '11/02/2019' AND [END] <= '12/02/2019'")
 
     all_events_duration = 0
     target_duration = 0
     for a in appointments:
         #grab the date from the meeting time
-        meetingDate = str(a.Start)
+        # meetingDate = str(a.Start)
         categories = str(a.Categories.encode("utf8"))
-        subject = str(a.Subject.encode("utf8"))
+        # subject = str(a.Subject.encode("utf8"))
         # body = str(a.Body.encode("utf8"))
         duration = str(a.duration)
-        
-        date = parse(meetingDate).date()
-        time = parse(meetingDate).time()
+        # date = parse(meetingDate).date()
+        # time = parse(meetingDate).time()
 
         duration = int(duration)
         if args.exclude not in categories:
-            # print duration 
-            # print categories
             all_events_duration += duration
             if args.measured_category in categories:
                 target_duration += duration
