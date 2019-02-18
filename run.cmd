@@ -1,1 +1,1 @@
-python .\read-outlook.py -s 02/18/2019 -e 02/22/2019 --exclude Personal
+python .\read-outlook.py -s 18/02/2019 -e 22/02/2019 --exclude Personal
